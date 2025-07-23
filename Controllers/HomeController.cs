@@ -18,11 +18,24 @@ public class HomeController : Controller
         _context = context;
     }
     public async Task<IActionResult> AddCategory(Category category)
-    { 
-        await _context.AddAsync(category);
+    {
+        if (category.Id == 0)
+        {
+            await _context.AddAsync(category);
+        }
+        else
+        {
+            _context.Update(category);
+        }
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Category));
+    }
+
+    public async Task<IActionResult> CategoryDetails(int Id)
+    {
+        var category = await _context.Category.FindAsync(Id);
+        return Json(category);
     }
     public IActionResult Category()
     {
