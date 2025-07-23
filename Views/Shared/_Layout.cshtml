@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Clean Blog Theme ASP.NET Core" />
+    <meta name="author" content="You" />
+    <title>@ViewData["Title"] - AdminBlog</title>
+
+    <!-- Theme CSS -->
+    <link href="~/css/clean-blog.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">AdminBlog</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Category">Category</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Author">Author</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h1>Admin Blog</h1>
+                        <span class="subheading">A Blog Theme by Start Bootstrap in ASP.NET Core</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="text-center">
+                &copy; @DateTime.Now.Year - AdminBlog | <a asp-controller="Home" asp-action="Category">Category</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Theme Scripts -->
+    <script src="~/js/jqBootstrapValidation.js" asp-append-version="true"></script>
+    <script src="~/js/contact_me.js" asp-append-version="true"></script>
+    <script src="~/js/clean-blog.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

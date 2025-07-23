@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Category>
+    @{
+    ViewData["Title"] = "Kategori Yönetimi";
+    }
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Kategoriler</h2>
+            <button type="button" class="btn btn-success" onclick="$('#CategoryModal').modal('show')">
+                <i class="bi bi-plus-lg"></i> Yeni Kategori
+            </button>
+        </div>
+
+        <!-- Kategori Listesi Tablosu -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td><a class="btn btn-danger" asp-route-id="@item.Id" asp-action="DeleteCategory"> Sil</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Yeni Kategori Modal -->
+    <div class="modal fade" id="CategoryModal" tabindex="-1" aria-labelledby="CategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content shadow-lg rounded">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="CategoryModalLabel">Yeni Kategori Ekle</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <form method="post" asp-action="AddCategory">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="Name" class="form-label">Kategori Adı</label>
+                            <input type="text" class="form-control" id="Name" name="Name" placeholder="Örn: Teknoloji" />
+                            <span class="text-danger small" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
