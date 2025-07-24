@@ -1,5 +1,6 @@
-﻿@{
-    Layout = null;
+﻿@using Microsoft.AspNetCore.Http
+@{
+    int? Id = Context.Session.GetInt32("id");
 }
 <!DOCTYPE html>
 <html lang="en">

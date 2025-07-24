@@ -10,6 +10,16 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly BlogContext _context;
 
+    public IActionResult Login(string Email, string Password)
+    {
+        var author = _context.Author.FirstOrDefault(w => w.Email == Email && w.Password == Password);
+        if(author==null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        HttpContext.Session.SetInt32("id", author.Id);
+        return RedirectToAction(nameof(Index));
+    }
 
 
     public HomeController(ILogger<HomeController> logger, BlogContext context)
