@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿﻿@using Microsoft.AspNetCore.Http;
 @{
     int? id = Context.Session.GetInt32("id");
 }
@@ -6,81 +6,59 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AdminBlog</title>
-    <link href="~/css/clean-blog.min.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">AdminBlog</a>
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-
-                    @if (id.HasValue)
-                    {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Category">Category</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Author">Author</a></li>
-                    }
-                    else
-                    {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Giriş Yap</a></li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="site-heading">
-                        <h1>Admin Blog</h1>
-                        <span class="subheading">A Blog Theme by Start Bootstrap in ASP.NET Core</span>
-                    </div>
+    @if(id.HasValue){
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AdminBlog</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if(!id.HasValue){
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Category">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Author">Author</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
+                        </li>
+                    </ul>
+                    <a href="/Home/LogOut" class="btn btn-secondary">Çıkış Yap</a>
                 </div>
             </div>
-        </div>
+        </nav>
     </header>
-
-    <!-- Main Content -->
+    }
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                @RenderBody()
-            </div>
-        </div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
 
-    <hr />
-
-    <!-- Footer -->
-    <footer>
+    <footer class="border-top footer text-muted">
         <div class="container">
-            <p class="text-center">
-                &copy; @DateTime.Now.Year - AdminBlog | <a asp-controller="Home" asp-action="Category">Category</a>
-            </p>
+            &copy; 2020 - AdminBlog - <a asp-area="" asp-controller="Home" asp-action="Category">Category</a>
         </div>
     </footer>
-
-    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/clean-blog.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

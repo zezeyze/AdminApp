@@ -26,6 +26,20 @@ namespace AdminBlog.Controllers
 
         public IActionResult Index()
         {
+            var list = _context.Blog.ToList();
+            return View(list);
+        }
+        public IActionResult Publish(int Id)
+        {
+            var blog = _context.Blog.Find(Id);
+            blog.IsPublish=true;
+            _context.Update(blog);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Blog()
+        {
             // Kategorileri SelectListItem olarak hazýrlýyoruz
             ViewBag.Categories = _context.Category.Select(w =>
                 new SelectListItem
@@ -36,6 +50,7 @@ namespace AdminBlog.Controllers
 
             return View();
         }
+
         public async Task<IActionResult> Save(Blog model)
         {
             if (model != null)

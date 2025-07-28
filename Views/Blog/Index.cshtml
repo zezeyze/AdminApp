@@ -1,59 +1,42 @@
-<form id="form" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-        <input type="text" id="title" class="form-control" name="title" />
-    </div>
-    <div class="form-group">
-        <input type="text" id="subtitle" class="form-control" name="subtitle" />
-    </div>
-    <div class="form-group">
-        <textarea id="summernote" name="content"></textarea>
-    </div>
-    <div class="form-group">
-        <input type="file" class="form-control" name="ImagePath" />
-    </div>
-    @Html.DropDownList("categoryid", ViewBag.Categories as List<SelectListItem>, "Bir kategori seçiniz", new { @class = "form-control", @id = "categoryid" })
-    <div class="btn-group-toggle mt-2">
-        <button type="button" onclick="Save()" class="btn btn-primary">Kaydet</button>
-    </div>
-</form>
+@model IEnumerable<AdminBlog.Models.Blog>
+    @{
+    ViewData["Title"] = "Kategori Yönetimi";
+    }
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#summernote').summernote();
-        });
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Yazarlar</h2>
+            <button type="button" class="btn btn-success" onclick="$('#AuthorModal').modal('show')">
+                <i class="bi bi-plus-lg"></i> Yeni Yazar
+            </button>
+        </div>
 
-        function Save() {
-            var title = document.getElementById("title").value;
-            var subtitle = document.getElementById("subtitle").value;
-            var content = $('#summernote').summernote('code');
-            var category = document.getElementById("categoryid").value;
-            var form = document.getElementById("form");
+        <!-- Kategori Listesi Tablosu -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+              {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Title</td>
+                    <td>
+                        @if(item.IsPublish){
+                        <a class="btn btn-success">Yayýnlandý</a>
 
-            var formData = new FormData(form);
-            formData.append("title", title);
-            formData.append("subtitle", subtitle);
-            formData.append("content", content);
-            formData.append("categoryid", category);
-
-            var url = '/Blog/Save';
-
-            fetch(url, {
-                method: 'POST',
-                body: formData
-            })
-                .then(res => res.json())
-                .then(result => {
-                    if (result === true) {
-                        alert("Blog kaydedildi!");
-                    } else {
-                        alert("Hata oluþtu.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Hata:", error);
-                });
+               }
+                        else
+                        {
+                        <a class="btn btn-light" asp-route-id="@item.Id" asp-action="Publish">Yayýnla</a>
+                        }
+                    </td>
+                </tr>
         }
-    </script>
-}
+            </tbody>
+        </table>
